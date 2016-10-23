@@ -67,3 +67,16 @@ Agenda
 2. Hur man använder i front-end-utveckling
     - Enkelt grund-case utan modulladdare
     - Med modulladdare: Webpack
+
+Typescript allmänt
+------------------
+### Installera
+
+    $ cd typescript-language
+    $ npm install
+    
+### Kör tester kontinuerligt
+Starta tester (*.spec.ts-filer) och kör kontinuerligt. Tester körs
+om automatiskt när man sparar filer. 
+
+    $ npm run test:auto
