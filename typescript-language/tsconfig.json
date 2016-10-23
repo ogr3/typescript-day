@@ -9,8 +9,8 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "declaration": true,
-    "pretty": true
+    "declaration": false,
+    "pretty":true
   },
   "exclude": [
     "node_modules"

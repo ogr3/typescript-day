@@ -3,8 +3,17 @@ Kompetensdag: Typescript
 
 Agenda
 ------
-1. Genomgång av språket
+1. Beskriv bakgrund
+	- Superset av javascript
+	- Demonstrera översättning 
+	- modulladdning i NodeJS med commonjs 
+	- source map
+	- debugga i NodeJS
+	- FP-style i kollektioner
+	- Lodash
+2. Genomgång av språket
 	- Sätt upp enkelt node-projekt med kontinuerlig kompilering
+	  - Beskriv hur projektet är uppsatt 
 	- Basic types
 	  - Boolean
 	  - Number
@@ -47,6 +56,10 @@ Agenda
 	- Modules
 	- Namespaces
 	- Module resolution
+	  - Ambient declarations
+	  - Generering av .d.ts-filer
+	  - Node
+	  - Webpack 
 	- Declaration merging
 	- Decorators
 	- Mixins
