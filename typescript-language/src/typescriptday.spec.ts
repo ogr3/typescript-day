@@ -149,13 +149,17 @@ rader`;
       const anObject = {
         a:'foo',
         b:12,
-        c:'bar'
+        c:'bar',
+        d: {
+          e:'hepp'
+        }
       };
 
-      // Extrahera property a och b till motsvarande symboler
-      const {a,b} = anObject;
+      // Extrahera property a, b och e till motsvarande symboler
+      const {a,b,d:{e}} = anObject;
       expect(a).to.equal('foo');
       expect(b).to.equal(12);
+      expect(e).to.equal('hepp');
 
       // Extrahera property a till symbolen 'apa' och property b till symbolen 'banan
       const {a:apa,b:banan} = anObject;
