@@ -1,6 +1,16 @@
 Kompetensdag: Typescript
 ========================
 
+Förutsättning: Node JS 6.x är installerat
+
+Kolla att projektet bygger (på mac eller *nix)
+----------------------------------------------
+
+    $ cd typescript-language
+    $ npm install && npm run test
+
+
+
 Agenda
 ------
 1. Beskriv bakgrund
@@ -67,6 +77,8 @@ Agenda
 2. Hur man använder i front-end-utveckling
     - Enkelt grund-case utan modulladdare
     - Med modulladdare: Webpack
+3. Skapa NPM-paket för Angular2-komponent
+
 
 Typescript allmänt
 ------------------

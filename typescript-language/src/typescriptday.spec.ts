@@ -1,7 +1,6 @@
 import {expect} from "chai";
 import "mocha";
 
-
 describe("Typescript", () => {
   it("Se till att mocha och chai snurrar", () => {
     expect(true).to.equal(true);
@@ -387,19 +386,20 @@ rader`;
         }
       }
     });
-
   });
 
   describe("Klasser", () => {
     it ("Demonstrera klass", () => {
       // Klasser fungerar i stort som i Java
+      // - fält är publika per default (men man kan även ange det explicit)
       class Bas {
-        aPublicProperty:number; // public
+        aPublicProperty: number; // public
         private aPrivateProperty: string;
         protected aProtectedProperty: number[];
-        constructor(aPublicProperty:number) {
+
+        constructor(aPublicProperty: number) {
           this.aPublicProperty = aPublicProperty; // OBS 'this' måste alltid anges
-          this.aPrivateProperty = "Startade med: "+aPublicProperty;
+          this.aPrivateProperty = "Startade med: " + aPublicProperty;
         }
 
         getAPrivateProperty(): string {
@@ -407,7 +407,7 @@ rader`;
         }
       }
 
-      const b:Bas = new Bas(42);
+      const b: Bas = new Bas(42);
       const z = b.getAPrivateProperty();
       expect(z).to.eql('Startade med: 42');
 
@@ -417,33 +417,163 @@ rader`;
           super(4711);
           this.aProtectedProperty = [99];
         }
+
         getProtected() {
           return this.aProtectedProperty;
         }
       }
-      const b2:Bas = new Sub(); // Referens till Bas kan referera subklasser som vanligt
+      const b2: Bas = new Sub(); // Referens till Bas kan referera subklasser som vanligt
       // b2.getProtected() är ej åtkomlig så klart
       const sub: Sub = new Sub();
       expect(sub.getProtected()).to.eql([99]);
 
     });
 
-    it ("Demonstrera getters/setters", () => {
+    it ("Demonstrera deklaration av fält i konstruktor", () => {
+      class SlimJim {
+        constructor(public x:number,private y:number){} // man kan deklarera fält direkt i konstruktor
+        meaningOfLife():number {
+          return this.x + this.y;
+        }
+      }
+      const slimJim = new SlimJim(40, 2);
+      expect(slimJim.x).to.eql(40);
+      expect(slimJim.meaningOfLife()).to.eql(42);
+    });
+
+    it("Demonstrera strukturell typlikhet för private (och protected)", () => {
+      // TypeScript är ett strukturellt typsystem.
+      // När man jämför två olika typer, så är typerna kompatibla om alla medlemmar är kompatible
+      // Dock gäller inte detta om medlemmarna är private eller protected. För sådana medlemmar krävs det at de
+      // her sitt ursprung i samma deklaration, dvs samma basklass.
+      class Animal {
+        private name: string;
+        constructor(theName: string) { this.name = theName; }
+      }
+
+      class Rhino extends Animal {
+        constructor() { super("Rhino"); }
+      }
+
+      class Employee {
+        private name: string;
+        constructor(theName: string) { this.name = theName; }
+      }
+
+      let animal = new Animal("Goat");
+      const rhino = new Rhino();
+      const employee = new Employee("Bob");
+
+      animal = rhino; // OK
+      // animal = employee; // Error: 'Animal' och 'Employee' är inte kompatibla
+
+    });
+
+    it("Konstruktorer kan vara protected", () => {
       class A {
-        private _aPrivateProperty: string;
+        protected constructor(protected x: number){}
+      }
+
+      class B extends A {
+        constructor(public y: number){
+          super(42);
+        }
+      }
+    });
+
+    it("Fält kan vara readonly", () => {
+      class A {
+        readonly x:number;
+        constructor(x: number) {
+          this.x = x;
+        }
+      }
+
+      const a:A = new A(42);
+      // a.x = 99; Error: kan ej ändra readonly
+
+      // Dessutom finns en short-hand för att skapa readonly-fält
+      class B {
+        constructor(readonly x: number, private readonly: number) {} // publikt per default
+      }
+
+      expect((new B(42,99)).x).to.equal(42);
+    });
+
+
+
+    it ("Demonstrera accessors", () => {
+      // Man kan definiera getters/setters (liknande C#) för fält så att man kan
+      // använda dem med vanlig property-syntax
+
+      class A {
+        private _x: string;
         constructor() {
-          this._aPrivateProperty = '42';
+          this._x = '42';
         }
 
-        get aPrivateProperty(): string { // Genererar en property-style getter a'la C#
-          return this._aPrivateProperty; // Property-namnet får inte krocka med getter-namnet
+        get x(): string { // Genererar en property-style getter a'la C#
+          return this._x; // Property-namnet får inte krocka med getter-namnet
+        }
+
+        set x(newX:string) {
+          if (newX.length > 10) {
+            throw 'Error: string must no be longer than 10 characters';
+          }
+          this._x = newX;
         }
       }
 
       const a:A = new A();
-      const z = a.aPrivateProperty; // OBS syntax som property
-      expect(z).to.eql('42');
+      const z = a.x; // OBS syntax som property
+      expect(z).to.equal('42');
+      expect(() => {a.x = 'a loooooooooooooong string'}).to.throw('Error: string must no be longer than 10 characters');
     })
+  });
+
+  it("Man kan ha static members", ()=>{
+    class A {
+      static x = 42;
+      static showMe() {
+        return 99;
+      }
+    }
+
+    expect(A.x).to.equal(42);
+    expect(A.showMe()).to.equal(99);
+  });
+
+  it("Man kan skapa abstrakta klasser", ()=>{
+    abstract class A {
+      abstract f():number; // Man kan endast ha abstrakta metoder i abstrakta klasser
+      g() {
+        return this.f() + 99;
+      }
+    }
+
+    class B extends A {
+      f():number {
+        return 42;
+      }
+    }
+
+    expect((new B().g())).to.equal(42 + 99);
+  });
+
+  it("Constructor functions", () => {
+    // När man definierar en klass blir klassen/symbolen även en konstruktor-funktion
+    // som man t.ex kan skicka som parameter.
+    // Detta kan man utnyttja när man skall implementera services, controllers, etc. i Angular 1.x
+    class A {
+      constructor(public x:number){}
+    }
+
+    function xx(constr:any, param:number):any {
+      return new constr(param);
+    }
+
+    const a:A = xx(A, 21);
+    expect(a.x).to.equal(21);
   });
 
   describe("ES6 features", () => {
