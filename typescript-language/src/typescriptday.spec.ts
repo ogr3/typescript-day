@@ -7,7 +7,7 @@ describe("Typescript", () => {
     expect(true).to.equal(true);
   });
 
-  describe("Bastyper", ()=> {
+  describe("Bastyper", () => {
     it("number (för både heltal och flyttal)", () => {
       const aNumber: number = 2;
       expect(aNumber).to.equal(2);
@@ -169,7 +169,7 @@ rader`;
     });
   });
 
-  describe("Interface", ()=> {
+  describe("Interface", () => {
     it("shape", ()=> {
       // Typescript utgår först och främst i att beskriva formen/strukturen på saker, s.k
       // "duck-typing". Man kan t.ex ange typen på en variabel eller parameter enligt nedan
@@ -286,7 +286,7 @@ rader`;
     it("kontrakt för klasser", () => {
       interface Clock {
         currentTime: Date;
-        setTime(d: Date):void;
+        setTime(d: Date): void;
       }
 
       class MyClock implements Clock {
@@ -333,18 +333,19 @@ rader`;
       expect(logBuf).to.eql(['[zzz]: kaka', '\n', '[zzz]: banan']);
     });
 
-    it("interface som ärever från class", () => {
+    it("interface som ärver från class", () => {
       // Ett interface kan ärva från klass och ärver då dess medlemmar
       // men ej immplementation.
       class A {
-        b:number;
-        kaka():void {
+        b: number;
+
+        kaka(): void {
           this.b = 12;
         }
       }
 
       interface B extends A {
-        banan():void;
+        banan(): void;
       }
 
       class C implements B {
@@ -362,12 +363,15 @@ rader`;
       // subklasser.
       //
       class X {
-        private a:number;
-        doIt():void {this.a = 42}
+        private a: number;
+
+        doIt(): void {
+          this.a = 42
+        }
       }
 
       interface Y extends X {
-        stuff():void;
+        stuff(): void;
       }
 
       // Detta går inte eftersom a är privat i X
@@ -377,7 +381,7 @@ rader`;
       //     return null;
       //   }
       // }
-      // Däremot går det bra med (vad nu arvet Y <- X ska vara bra för?):
+      // Däremot går det bra med följande (vad nu arvet Y <- X ska vara bra för?):
       class Z extends X implements Y {
         stuff(): void {
         }
@@ -386,62 +390,120 @@ rader`;
 
   });
 
-  it("should demonstrate import classes", () => {
-  });
+  describe("Klasser", () => {
+    it ("Demonstrera klass", () => {
+      // Klasser fungerar i stort som i Java
+      class Bas {
+        aPublicProperty:number; // public
+        private aPrivateProperty: string;
+        protected aProtectedProperty: number[];
+        constructor(aPublicProperty:number) {
+          this.aPublicProperty = aPublicProperty; // OBS 'this' måste alltid anges
+          this.aPrivateProperty = "Startade med: "+aPublicProperty;
+        }
 
-  it("should demonstrate generators which return values", () => {
-    function* g(): Iterator<number> {
-      let index = 0;
-      while (true) {
-        yield index++;
+        getAPrivateProperty(): string {
+          return this.aPrivateProperty;
+        }
       }
-    }
 
-    // Alternativ 1
-    const iterator = g();
-    expect(iterator.next().value).to.equal(0);
-    expect(iterator.next().value).to.equal(1);
+      const b:Bas = new Bas(42);
+      const z = b.getAPrivateProperty();
+      expect(z).to.eql('Startade med: 42');
 
-    // Alternativ 2
-    let i = 0;
-    for (let x in g()) {
-      expect(x).to.equal(i);
-      i++;
-    }
-  });
+      // Subklasser kan skapas som vanligt
+      class Sub extends Bas {
+        constructor() {
+          super(4711);
+          this.aProtectedProperty = [99];
+        }
+        getProtected() {
+          return this.aProtectedProperty;
+        }
+      }
+      const b2:Bas = new Sub(); // Referens till Bas kan referera subklasser som vanligt
+      // b2.getProtected() är ej åtkomlig så klart
+      const sub: Sub = new Sub();
+      expect(sub.getProtected()).to.eql([99]);
 
-  it("should demonstrate async/await", () => {
-    Promise.resolve(123).then(x => console.log('x:', x));
-    const fetchSomething = () => new Promise((resolve) => {
-      setTimeout(() => {
-        resolve('future value');
-      }, 1);
     });
 
-    async function asyncFunction() {
-      const result = await fetchSomething(); // returns promise; await only allowed in async functions
-      // waits for promise and uses promise result
-      return result + ' 2';
-    }
+    it ("Demonstrera getters/setters", () => {
+      class A {
+        private _aPrivateProperty: string;
+        constructor() {
+          this._aPrivateProperty = '42';
+        }
 
-    asyncFunction().then(result => console.log(result));
-  });
-
-  it("should demonstrate generators which consume values", () => {
-    function* g(): Iterator<number> {
-      let sum = 0;
-      while (true) {
-        let x = yield;
-        if (x === undefined) return sum;
-        sum += x;
+        get aPrivateProperty(): string { // Genererar en property-style getter a'la C#
+          return this._aPrivateProperty; // Property-namnet får inte krocka med getter-namnet
+        }
       }
-    }
 
-    let iterator = g();
-    iterator.next();
-    iterator.next(42);
-    iterator.next(34);
-    expect(iterator.next().value).to.equal(42 + 34);
+      const a:A = new A();
+      const z = a.aPrivateProperty; // OBS syntax som property
+      expect(z).to.eql('42');
+    })
   });
 
+  describe("ES6 features", () => {
+
+    it("should demonstrate import classes", () => {
+    });
+
+    it("should demonstrate generators which return values", () => {
+      function* g(): Iterator<number> {
+        let index = 0;
+        while (true) {
+          yield index++;
+        }
+      }
+
+      // Alternativ 1
+      const iterator = g();
+      expect(iterator.next().value).to.equal(0);
+      expect(iterator.next().value).to.equal(1);
+
+      // Alternativ 2
+      let i = 0;
+      for (let x in g()) {
+        expect(x).to.equal(i);
+        i++;
+      }
+    });
+
+    it("should demonstrate async/await", () => {
+      Promise.resolve(123).then(x => console.log('x:', x));
+      const fetchSomething = () => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve('future value');
+        }, 1);
+      });
+
+      async function asyncFunction() {
+        const result = await fetchSomething(); // returns promise; await only allowed in async functions
+        // waits for promise and uses promise result
+        return result + ' 2';
+      }
+
+      asyncFunction().then(result => console.log(result));
+    });
+
+    it("should demonstrate generators which consume values", () => {
+      function* g(): Iterator<number> {
+        let sum = 0;
+        while (true) {
+          let x = yield;
+          if (x === undefined) return sum;
+          sum += x;
+        }
+      }
+
+      let iterator = g();
+      iterator.next();
+      iterator.next(42);
+      iterator.next(34);
+      expect(iterator.next().value).to.equal(42 + 34);
+    });
+  });
 });
