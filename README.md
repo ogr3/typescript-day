@@ -96,9 +96,7 @@ om automatiskt när man sparar filer.
     
 Testa Gravizo
 =============
-![Alt text](http://g.gravizo.com/g?
- 	
-	@startuml;
+![Alt text](http://g.gravizo.com/g?@startuml;
 
 	actor User;
 	participant "First Class" as A;
