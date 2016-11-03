@@ -1,5 +1,8 @@
 import {expect} from "chai";
-import "mocha";
+import ClassA from "./package1/ClassA";
+import ClassB = require("./package1/ClassB");
+import * as rex from "./package1/Reexport";
+import {ClassD} from "./package1/subpackage/ClassD";
 
 describe("Typescript", () => {
   it("Se till att mocha och chai snurrar", () => {
@@ -389,7 +392,7 @@ rader`;
   });
 
   describe("Klasser", () => {
-    it ("Demonstrera klass", () => {
+    it("Demonstrera klass", () => {
       // Klasser fungerar i stort som i Java
       // - fält är publika per default (men man kan även ange det explicit)
       class Bas {
@@ -574,6 +577,33 @@ rader`;
 
     const a:A = xx(A, 21);
     expect(a.x).to.equal(21);
+  });
+
+  describe("Modules", () => {
+    it("Importera anonym klass", () => {
+      const a: ClassA = new ClassA;
+      expect(a.z).to.equal(2);
+    });
+
+    it("CommonJS style", ()=> {
+      const b: ClassB = new ClassB;
+      expect(b.y).to.equal(3);
+
+    });
+
+    it("Demonstrera re-export", () => {
+      const c:rex.ClassC = new rex.ClassC();
+    });
+
+    it("Demonstrera shorthand module", () => {
+
+    });
+
+    it("Demonstrera module resolution", ()=>{
+      const d = new ClassD();
+      expect(d.c.z).to.equal(29);
+    });
+
   });
 
   describe("ES6 features", () => {
