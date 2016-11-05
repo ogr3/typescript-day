@@ -4,5 +4,5 @@ namespace mainmodule {
   const banan = new Banan();
 
   kaka.greeting();
-  console.log('The color of a banan is:', banan.color);
+  console.log('The color of a banana is:', banan.color);
 }
