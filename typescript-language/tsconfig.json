@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "commonjs", // generera kod som motsvarar commonjs med require() och module.exports
+    "moduleResolution": "node", // kompilatorn använder samma strategi som NodeJS för lösa upp importer
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

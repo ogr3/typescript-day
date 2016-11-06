@@ -1,8 +1,4 @@
 import {expect} from "chai";
-import ClassA from "./modules/ClassA";
-import ClassB = require("./modules/ClassB");
-import * as rex from "./modules/Reexport";
-import {ClassD} from "./modules/subpackage/ClassD";
 
 describe("Typescript", () => {
   it("Se till att mocha och chai snurrar", () => {
@@ -880,39 +876,27 @@ rader`;
     });
   });
 
-  describe("Modules", () => {
-    it("Importera anonym klass", () => {
-      const a: ClassA = new ClassA;
-      expect(a.z).to.equal(2);
+  describe("Lite extra ES6 features som är ganska onödiga (och kan ha begränsat stöd i runtime)", () => {
+    it("Ny for-syntax: for..of", () => {
+      // Tidigare for-syntax var endast till för att iterera nycklarna i en array
+      const arr = ['kaka', 'baka', 'banan'];
+      const keys = [];
+      for (let key in arr) {
+        keys.push(key);
+      }
+      expect(keys).to.eql(['0', '1', '2']);
+
+      // Men egentligen vill man ju oftast iterera över elementen, vilket man nu kan göra med for..of
+      const elems = [];
+      for (let elem of arr) {
+        elems.push(elem);
+      }
+      expect(elems).to.eql(['kaka', 'baka', 'banan']);
     });
 
-    it("CommonJS style", ()=> {
-      const b: ClassB = new ClassB;
-      expect(b.y).to.equal(3);
-
-    });
-
-    it("Demonstrera re-export", () => {
-      const c: rex.ClassC = new rex.ClassC();
-    });
-
-    it("Demonstrera shorthand module", () => {
-
-    });
-
-    it("Demonstrera module resolution", ()=> {
-      const d = new ClassD();
-      expect(d.c.z).to.equal(29);
-    });
-
-  });
-
-  describe("ES6 features", () => {
-
-    it("should demonstrate import classes", () => {
-    });
-
-    it("should demonstrate generators which return values", () => {
+    it("Generatorer som returnerar värden", () => {
+      // En genarator är ett sätt att skapa iterator av en funktion
+      // - returnerar värde vid varje yield
       function* g(): Iterator<number> {
         let index = 0;
         while (true) {
@@ -920,12 +904,12 @@ rader`;
         }
       }
 
-      // Alternativ 1
+      // Alternativ 1: anrop till next() triggar yield
       const iterator = g();
       expect(iterator.next().value).to.equal(0);
       expect(iterator.next().value).to.equal(1);
 
-      // Alternativ 2
+      // Alternativ 2: en iteration triggar yield
       let i = 0;
       for (let x in g()) {
         expect(x).to.equal(i);
@@ -933,24 +917,8 @@ rader`;
       }
     });
 
-    it("should demonstrate async/await", () => {
-      Promise.resolve(123).then(x => console.log('x:', x));
-      const fetchSomething = () => new Promise((resolve) => {
-        setTimeout(() => {
-          resolve('future value');
-        }, 1);
-      });
-
-      async function asyncFunction() {
-        const result = await fetchSomething(); // returns promise; await only allowed in async functions
-        // waits for promise and uses promise result
-        return result + ' 2';
-      }
-
-      asyncFunction().then(result => console.log(result));
-    });
-
-    it("should demonstrate generators which consume values", () => {
+    it("Generator som konsumerar värden", () => {
+      // En genarator kan även ta emot värden vid varje yield
       function* g(): Iterator<number> {
         let sum = 0;
         while (true) {
@@ -965,6 +933,22 @@ rader`;
       iterator.next(42);
       iterator.next(34);
       expect(iterator.next().value).to.equal(42 + 34);
+    });
+
+    it("should demonstrate async/await", () => {
+      const fetchSomething = () => new Promise((resolve) => {
+        setTimeout(() => {
+          resolve('value from async');
+        }, 1);
+      });
+
+      async function asyncFunction() {
+        const result = await fetchSomething(); // returns promise; await only allowed in async functions
+        // waits for promise and uses promise result
+        return result + ' 2';
+      }
+
+      asyncFunction().then(result => console.log(result));
     });
   });
 });
