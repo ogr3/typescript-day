@@ -23,7 +23,7 @@ import * as rex from "./reexport";
 // Här imprterar vi CommonJS style. Används framförallt för import av javascript-filer i 3PP
 import ClassB = require("./ClassB");
 
-describe("Typescript", () => {
+describe("Modulhantering i Typescript", () => {
   it("De-structuring", () => {
     const banan = new Banan();
     expect(banan.zz).to.equal('hepp');
