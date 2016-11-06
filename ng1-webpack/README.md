@@ -32,7 +32,73 @@ Skapa en ny katalog `ng1-webpack` och kopiera in följande filer från [web-with
 
 Kör
 
-	$ npm install
+```bash
+$ npm install
+```
 	
-	
+Angular 1.5
+-----------
+OK, då ska vi lägga till Angular 1.5 samt se till att den bootstrappas.
 
+Installera angular smat dess @types:
+
+```bash
+$ npm i -S angular
+$ npm i -D @types/angular
+```	
+
+Vi ska se till att alla 3PP:er hamnar i en egen bundle genom att konfigurera webpack med poster för applikationen resp. 3PP:er 
+
+i `config/webpack.common.js`:
+
+```javascript
+:
+entry: {
+  "app": "./src/app.ts"	,
+  "vendor": "./src/vendor.ts"
+}
+:
+```
+
+Och så lägger vi till filerna.
+
+#### src/app.ts
+
+```typescript
+import * as ng1 from "angular";
+
+ng1.bootstrap(document, [], {
+   strictDi: false
+});
+```	
+
+#### src/vendor.ts
+
+```typescript
+import "angular";	
+```
+
+Tills sist lägger vi till `src/index.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8">
+    <title>CAG-labs</title>
+  </head>
+  <body>
+    <h1>Angular 1.x + Webpack</h1>
+    <button id="greetButton">Hälsa</button>
+    <p id="greeting">Om Angular bootstrappat korrekt skall summan bli rätt: 1 + 1 = {{1+1}}</p>
+  </body>
+</html>
+```
+
+Kör sen 
+
+```bash
+$ npm start
+```
+
+Och öppna 

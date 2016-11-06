@@ -17,10 +17,13 @@ Sätta upp ett enkelt webpack-projekt för typescript-applikationer
 ### Skapa projekt och installera paket
 
 Först sätter vi upp ett node-projekt
+
 ```bash
 $ npm init -y
 ```
+
 Sen installerar vi typescript, webpack samt lite webpack-tillägg:
+
 ```bash
 $ npm i -D rimraf                         # OS-oberoende rm -rf
 $ npm i -D typescript                     # TS-kompilatorn
@@ -31,6 +34,7 @@ $ npm i -D awesome-typescript-loader      # Webpack-laddare för typescript-file
 $ npm i -D html-loader                    # Webpack-laddare för html-filer
 $ npm i -D html-webpack-plugin            # Webpack-tillägg för att skapa html-fil som laddar webpack-bundle
 ```
+
 ### Webpackkonfiguration
 Vi skapar konfigurationsfiler under `config/` för webpack
 
@@ -39,8 +43,8 @@ Vi skapar konfigurationsfiler under `config/` för webpack
 - En för att bygga distro
 
 #### Gemensam: config/webpack.common.js
-
 Minimal, man behöver typiskt loders för CSS, LESS, SASS, m.m, det finns an uppsjö.
+
 ```javascript
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
@@ -57,7 +61,7 @@ module.exports = {
     loaders: [
       {
         // Ange att awesome-typescript-loader skall användas för att ladda typescriptfiler
-        // vid undling. Den kommer då att kompilera coh skapa source-maps m.m
+        // vid bundling. Den kommer då att kompilera och skapa source-maps m.m
         test: /\.ts$/,
         loader: "awesome-typescript-loader"
       },
@@ -78,6 +82,7 @@ module.exports = {
 ```
 
 #### Specifik för utveckling : config/webpack.dev.js
+
 ```javascript
 const webpackMerge = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
@@ -100,9 +105,10 @@ module.exports = webpackMerge(commonConfig, {
   }
 });
 ```
-#### Specifik för distro : config/webpack.prod.js
 
+#### Specifik för distro : config/webpack.prod.js
 Denna är minimal, här lägger man typiskt till tillägg för uglifiering, m.m
+
 ```javascript
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
@@ -128,6 +134,7 @@ module.exports = webpackMerge(commonConfig, {
   ]
 });
 ```
+
 ### Kommandon
 Nu när vi har olika webpack-konfar så vill vi kunna köra dem. Vi behöver inte grunt eller gulp utan kan skapa
 os enkla script i package.json.
@@ -135,6 +142,7 @@ os enkla script i package.json.
 Vi lägger till följande under "scripts"-avdelningen i package.json     
 
 Kommando för att starta utvecklingsservern med automatiskt ombygge vid ändringar (använder config/webpack.dev.js):
+
 ```json
 :
 "start": "node_modules/.bin/webpack-dev-server --config config/webpack.dev.js --inline --progress --port 8080",
@@ -142,16 +150,19 @@ Kommando för att starta utvecklingsservern med automatiskt ombygge vid ändring
 ```
     
 Kommando för att bygga distro under `dist/` (config/webpack.prod.js):
+
 ```json
 :
 "build:prod": "node_modules/.bin/rimraf ./dist && node_modules/.bin/webpack --config config/webpack.prod.js --progress --profile --bail",
 :
 ```
+
 ### Applikationens ingång: Main.ts & index.html
 
 Vi skapar de angivna filerna + ett internt beroende för att se att importer funkar som de skall.
 
 #### src/index.html
+
 ```html
 <!DOCTYPE html>
 <html lang="sv">
@@ -166,7 +177,9 @@ Vi skapar de angivna filerna + ett internt beroende för att se att importer fun
   </body>
 </html>
 ```
+
 #### src/Main.ts
+
 ```typescript
 import {Greeter} from "./greeter/Greeter";
 
@@ -174,7 +187,9 @@ console.log('Loaded');
 
 const greeter = new Greeter();
 ```
+
 #### src/greeter/Greeter.ts
+
 ```typescript
 export class Greeter {
   private n = 0;
@@ -192,15 +207,18 @@ export class Greeter {
   }
 }
 ```
+
 Kör!
 ----
 
 Nu är allt klart för att köra applikationen i utvecklingsservern.
 
 Starta med
+
 ```bash
 $ npm start
 ```
+
 Gå sedan till [http://localhost:8080](http://localhost:8080), så skall du se:
 
 ![Enkel webapp](simple-webapp-1.png)
@@ -214,17 +232,21 @@ uppdateras auomatiskt.
 Bygg distro
 -----------
 När man skall bygga en distro kör man 
+
 ```bash
 $ npm run build:prod
 ```
+
 Den körbara applikationen (som t.ex kan inkluderas i en WAR-fil eller deployas direkt på Apacche, NGINX, e.dyl) finns under `dist/`. 
 
 Vi kan testa genom att köra en [lite-sever](https://github.com/johnpapa/lite-server):
+
 ```bash
 $ npm i -g lite-server
 $ cd dist
 $ lite-server
 ````
+
 Lite-server öppnar automatiskt [http://localhost:3000/](http://localhost:3000/) och där ska vi se våran applikation nu servad från `dist/`.
 
 

@@ -21,7 +21,7 @@ module.exports = {
         // Ange loader för html-filer
         test: /\.html$/,
         loader: 'html'
-      },
+      }
     ]
   },
   plugins: [
