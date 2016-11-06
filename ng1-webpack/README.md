@@ -137,7 +137,7 @@ Om vi öppnar webläsarens konsol-fönster ska vi se en loggning:
     
 Lägga till en komponent
 -----------------------
-Nu skapar vi oss en komponent á la Angular 1.5. Vi gör en simpel
+Nu skapar vi oss en komponent á la Angular 1.5 (mer att läsa finns på [Components](https://docs.angularjs.org/guide/component)). Vi gör en simpel
 komponent som bara lägger till en klocka som uppdateras kontinuerligt.
 
 Lägg till filen `src/clock/clock.component.ts`
@@ -174,6 +174,7 @@ Värt att notera ovan:
   måste vi använda _inline array annotation_ i controller-tilldelningen, 
   för att explicit ange DI-parameternamn. 
   Detta för DI skall funka efter minifiering/uglifiering.
+  Se _Inline Array Annotation_ i [Dependency Injection](https://docs.angularjs.org/guide/di) för detaljer.
 - Controller-klassen agerar factory-metod (kommer ni ihåg konstruktorfunktioner i TS?).
   Instanser av klassen kommer vara åtkomliga som `$ctrl`i HTML. 
   Fälten i klassen blir således properties åtkomliga i HTML, som .t.ex
