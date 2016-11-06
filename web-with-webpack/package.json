@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --config config/webpack.dev.js --inline --progress --port 8080",
-    "build:prod": "rimraf ./dist && webpack --config config/webpack.prod.js --progress --profile --bail",
+    "start": "node_modules/.bin/webpack-dev-server --config config/webpack.dev.js --inline --progress --port 8080",
+    "build:prod": "node_modules/.bin/rimraf ./dist && node_modules/.bin/webpack --config config/webpack.prod.js --progress --profile --bail",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

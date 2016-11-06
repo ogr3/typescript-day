@@ -1,6 +1,6 @@
-var webpack = require('webpack');
-var webpackMerge = require('webpack-merge');
-var commonConfig = require('./webpack.common.js');
+const webpack = require('webpack');
+const webpackMerge = require('webpack-merge');
+const commonConfig = require('./webpack.common.js');
 
 module.exports = webpackMerge(commonConfig, {
   devtool: 'source-map',
@@ -17,7 +17,7 @@ module.exports = webpackMerge(commonConfig, {
   },
 
   plugins: [
-    new webpack.NoErrorsPlugin(),
+    // Ta bort eventuell duplicering
     new webpack.optimize.DedupePlugin()
   ]
 });
