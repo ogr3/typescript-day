@@ -3,8 +3,10 @@ module.exports = {
   entry: {
     // Här anger vi att huvudmodulen som skall inkluderas är src/Main.ts.
     // Denna skall sedan importera (direkt eller indirekt) resten av applikationen
-    "app": "./src/app.ts"	,
-    "vendor": "./src/vendor.ts"
+    // Dessutom anger vi att src/vendor.ts skall inkluderas vilken i sin tur anger
+    // 3PP-libbar
+    "vendor": "./src/vendor.ts",
+    "main": "./src/Main.ts"
   },
   resolve: {
     // Webpack skall följande filändelser för att lösa upp moduler
@@ -22,7 +24,7 @@ module.exports = {
         // Ange loader för html-filer
         test: /\.html$/,
         loader: 'html'
-      },
+      }
     ]
   },
   plugins: [

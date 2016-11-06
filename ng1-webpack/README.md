@@ -45,6 +45,7 @@ Installera angular smat dess @types:
 ```bash
 $ npm i -S angular
 $ npm i -D @types/angular
+$ npm i -D jquery
 ```	
 
 Vi ska se till att alla 3PP:er hamnar i en egen bundle genom att konfigurera webpack med poster för applikationen resp. 3PP:er 
@@ -54,7 +55,7 @@ i `config/webpack.common.js`:
 ```javascript
 :
 entry: {
-  "app": "./src/app.ts"	,
+  "main": "./src/Main.ts"	,
   "vendor": "./src/vendor.ts"
 }
 :
@@ -89,8 +90,7 @@ Tills sist lägger vi till `src/index.html`:
   </head>
   <body>
     <h1>Angular 1.x + Webpack</h1>
-    <button id="greetButton">Hälsa</button>
-    <p id="greeting">Om Angular bootstrappat korrekt skall summan bli rätt: 1 + 1 = {{1+1}}</p>
+    <p>Om Angular bootstrappat korrekt skall summan bli rätt: 1 + 1 = {{1+1}}</p>
   </body>
 </html>
 ```
@@ -101,4 +101,7 @@ Kör sen
 $ npm start
 ```
 
-Och öppna 
+Och öppna [http://localhost:8080/](http://localhost:8080/). 
+Om allt funkar som det ska du se 
+![Sida1](sida1.png)
+---

@@ -9,7 +9,9 @@ module.exports = webpackMerge(commonConfig, {
   // Devserver kommer att generera allt i minnet ist.f till disk
   output: {
     // Ange URL relativt vilken script m.m servas från
-    publicPath: 'http://localhost:8080/'
+    publicPath: 'http://localhost:8080/',
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js'
   },
 
   // Lite konf för webpack devserver

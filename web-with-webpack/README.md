@@ -51,7 +51,9 @@ module.exports = {
   entry: {
     // Här anger vi att huvudmodulen som skall inkluderas är src/Main.ts.
     // Denna skall sedan importera (direkt eller indirekt) resten av applikationen
-    "main": "./src/Main.ts"
+    "main": "./src/Main.ts",
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js'
   },
   resolve: {
     // Webpack skall följande filändelser för att lösa upp moduler
