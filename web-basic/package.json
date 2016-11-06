@@ -1,0 +1,16 @@
+{
+  "name": "web-basic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lite-server": "^2.2.2",
+    "typescript": "^2.0.7"
+  }
+}
