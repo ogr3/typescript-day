@@ -204,3 +204,8 @@ Till sist använder vi komponenten i `index.html`:
 :
 ```
 
+Nu skall sidan visa tiden:
+
+![Sida2](sida2.png)
+---
+
