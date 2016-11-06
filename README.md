@@ -10,5 +10,7 @@ Kolla att projektet bygger (på mac eller *nix)
 $ cd typescript-language
 $ npm install && npm run test
 ```
-Då skall följande visas:
+Då skall det rassla en massa installationer och köras tester 
+vilket förhoppningsvis avslutas med följande:
+
 ![Testresultat](testresult.png)
