@@ -935,7 +935,7 @@ rader`;
       expect(iterator.next().value).to.equal(42 + 34);
     });
 
-    it("should demonstrate async/await", () => {
+    it("async/await", () => {
       const fetchSomething = () => new Promise((resolve) => {
         setTimeout(() => {
           resolve('value from async');
