@@ -45,7 +45,7 @@ Installera angular smat dess @types:
 ```bash
 $ npm i -S angular
 $ npm i -D @types/angular
-$ npm i -D jquery
+$ npm i -D jquery # Angular behöver jQuery
 ```	
 
 Vi ska se till att alla 3PP:er hamnar i en egen bundle genom att konfigurera webpack med poster för applikationen resp. 3PP:er 
@@ -69,7 +69,7 @@ Och så lägger vi till filerna.
 import * as ng1 from "angular";
 
 ng1.bootstrap(document, [], {
-   strictDi: false
+   strictDi: false // Vi kräver att man använder explicit dependency injection
 });
 ```	
 
@@ -105,3 +105,95 @@ Och öppna [http://localhost:8080/](http://localhost:8080/).
 Om allt funkar som det ska du se 
 ![Sida1](sida1.png)
 ---
+
+Lägga till en applikationsmodul
+-------------------------------
+Nu behöver vi en applikationsmodul. 
+
+Vi lägger till `app.module.ts`:
+
+```typescript
+import * as ng1 from 'angular';
+
+export const appModule = ng1.module('app.module', []);
+
+console.debug('appModule is initialized');
+```
+
+Vi implementerar den sedan i våran `Main.ts`, samt lägger till som ett 
+ beroende i våran bootstrap:
+ 
+```typescript
+:
+import {appModule} from "./app.module";
+:
+ng1.bootstrap(document, [appModule.name], {
+:
+```
+
+Om vi öppnar webläsarens konsol-fönster ska vi se en loggning:
+ 
+    appModule is initialized
+    
+Lägga till en komponent
+-----------------------
+Nu skapar vi oss en komponent á la Angular 1.5. Vi gör en simpel
+komponent som bara lägger till en klocka som uppdateras kontinuerligt.
+
+Lägg till filen `src/clock/clock.component.ts`
+
+```typescript
+import * as ng1 from "angular";
+import * as app from "../app.module"; 
+
+class Controller implements ng1.IComponentController {
+  time: string;
+
+  constructor(private $timeout:ng1.ITimeoutService) {
+    this.tick();
+  }
+
+  tick() {
+    this.time = new Date().toLocaleTimeString('sv');
+    this.$timeout(() => this.tick(), 1000);
+  }
+}
+
+app.appModule.component('cagClock', {
+  template: `
+    <div>
+    <p>{{$ctrl.time}}</p>
+    </div>
+      `,
+  controller: ['$timeout', Controller]
+});
+```
+Värt att notera ovan är att eftersom vi har bootstrappat med strictDi
+måste vi använda _inline array annotation_ i controller-tilldelningen, 
+för att explicit ange DI-parameternamn. 
+Detta för DI skall funka efter minifiering/uglifiering.
+
+Och så måste vi importera den i `app.module.ts` så att den inkluderas
+i applikationsbundeln och exekveras. Tänk på att den måste läggas sist
+i filen så att `export const appModule = ...` definierats innan import.
+
+```typescript
+:
+export const appModule = ng1.module('app.module', []);
+
+import "./clock/clock.component";
+:
+```
+
+Till sist använder vi komponenten i `index.html`:
+
+```html
+:
+  <body>
+    <h1>Angular 1.x + Webpack</h1>
+    <p>Om Angular bootstrappat korrekt skall summan bli 2: 1 + 1 = {{1+1}}</p>
+    <cag-clock></cag-clock>
+  </body>
+:
+```
+
