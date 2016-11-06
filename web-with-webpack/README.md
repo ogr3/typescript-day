@@ -10,6 +10,8 @@ Det finns även andra modulladare
 
 Men webpack ser ut vara vinnaren i utvecklingsaktivitet, funktioner, plugins och enkelhet.
 
+Vi skall sätta upp ett webpack-projekt för att få ett grepp om vad som erbjuds.
+
 Sätta upp ett enkelt webpack-projekt för typescript-applikationer
 -----------------------------------------------------------------
 ### Skapa projekt och installera paket
@@ -201,9 +203,26 @@ Gå sedan till [http://localhost:8080](http://localhost:8080), så skall du se:
 
 ![Enkel webapp](simple-webapp-1.png)
 
+---
 Prova att trycka på "Hälsa"-knappen så skall det dyka upp lite "Yo mannen!"-rader.
 
 Prova att ändra koden, t.ex "Yo mannen"-hälsningsfrasen i Greeting.ts; filerna kompileras om direkt och browsern
 uppdateras auomatiskt.
+
+Bygg distro
+-----------
+När man skall bygga en distro kör man 
+
+    $ npm run build:prod
+    
+Den körbara applikationen (som t.ex kan inkluderas i en WAR-fil eller deployas direkt på Apacche, NGINX, e.dyl) finns under `dist/`. 
+
+Vi kan testa genom att köra en [lite-sever](https://github.com/johnpapa/lite-server):
+
+	$ npm i -g lite-server
+	$ cd dist
+	$ lite-server
+	
+Lite server öppnar automatiskt [http://localhost:3000/](http://localhost:3000/) och där ska vi se våran applikation nu servad från `dist/`.	  
 
 
