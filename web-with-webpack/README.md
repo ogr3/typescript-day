@@ -21,16 +21,16 @@ Först sätter vi upp ett node-projekt
 $ npm init -y
 ```
 Sen installerar vi typescript, webpack samt lite webpack-tillägg:
-
-    $ npm i -D rimraf                         # OS-oberoende rm -rf
-    $ npm i -D typescript                     # TS-kompilatorn
-    $ npm i -D webpack                        # Webpack-core
-    $ npm i -D webpack-dev-server             # En utvecklingsserver för webpack, med hot reload
-    $ npm i -D webpack-merge                  # Används för att merga webpack-konfigurationer
-    $ npm i -D awesome-typescript-loader      # Webpack-laddare för typescript-filer
-    $ npm i -D html-loader                    # Webpack-laddare för html-filer
-    $ npm i -D html-webpack-plugin            # Webpack-tillägg för att skapa html-fil som laddar webpack-bundle
-    
+```bash
+$ npm i -D rimraf                         # OS-oberoende rm -rf
+$ npm i -D typescript                     # TS-kompilatorn
+$ npm i -D webpack                        # Webpack-core
+$ npm i -D webpack-dev-server             # En utvecklingsserver för webpack, med hot reload
+$ npm i -D webpack-merge                  # Används för att merga webpack-konfigurationer
+$ npm i -D awesome-typescript-loader      # Webpack-laddare för typescript-filer
+$ npm i -D html-loader                    # Webpack-laddare för html-filer
+$ npm i -D html-webpack-plugin            # Webpack-tillägg för att skapa html-fil som laddar webpack-bundle
+```
 ### Webpackkonfiguration
 Vi skapar konfigurationsfiler under `config/` för webpack
 
@@ -127,7 +127,7 @@ module.exports = webpackMerge(commonConfig, {
     new webpack.optimize.DedupePlugin()
   ]
 });
-``
+```
 ### Kommandon
 Nu när vi har olika webpack-konfar så vill vi kunna köra dem. Vi behöver inte grunt eller gulp utan kan skapa
 os enkla script i package.json.
@@ -135,7 +135,7 @@ os enkla script i package.json.
 Vi lägger till följande under "scripts"-avdelningen i package.json     
 
 Kommando för att starta utvecklingsservern med automatiskt ombygge vid ändringar (använder config/webpack.dev.js):
-```son
+```json
 :
 "start": "node_modules/.bin/webpack-dev-server --config config/webpack.dev.js --inline --progress --port 8080",
 :
@@ -198,9 +198,9 @@ Kör!
 Nu är allt klart för att köra applikationen i utvecklingsservern.
 
 Starta med
-
-    $ npm start
-
+```bash
+$ npm start
+```
 Gå sedan till [http://localhost:8080](http://localhost:8080), så skall du se:
 
 ![Enkel webapp](simple-webapp-1.png)
@@ -214,17 +214,17 @@ uppdateras auomatiskt.
 Bygg distro
 -----------
 När man skall bygga en distro kör man 
-
-    $ npm run build:prod
-    
+```bash
+$ npm run build:prod
+```
 Den körbara applikationen (som t.ex kan inkluderas i en WAR-fil eller deployas direkt på Apacche, NGINX, e.dyl) finns under `dist/`. 
 
 Vi kan testa genom att köra en [lite-sever](https://github.com/johnpapa/lite-server):
-
-	$ npm i -g lite-server
-	$ cd dist
-	$ lite-server
-	
-Lite server öppnar automatiskt [http://localhost:3000/](http://localhost:3000/) och där ska vi se våran applikation nu servad från `dist/`.	  
+```bash
+$ npm i -g lite-server
+$ cd dist
+$ lite-server
+````
+Lite-server öppnar automatiskt [http://localhost:3000/](http://localhost:3000/) och där ska vi se våran applikation nu servad från `dist/`.
 
 
