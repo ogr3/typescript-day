@@ -2,7 +2,7 @@ import * as ng1 from "angular";
 import * as app from "../app.module";
 
 class Controller implements ng1.IComponentController {
-  time: string;
+  private time: string;
 
   constructor(private $timeout:ng1.ITimeoutService) {
     this.tick();

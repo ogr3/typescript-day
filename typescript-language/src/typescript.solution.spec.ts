@@ -857,7 +857,7 @@ rader`;
     it("Klasstyper", () => {
       // Ett typsäkrare sätt att skapa factory-metod jämfört med vad vi visade tidigare
       // kan man få till med klasstyper.
-      // En klasstyp definierar en konstruktor funktion och är ett objekt.
+      // En klasstyp definierar en konstruktorfunktion och är ett objekt.
       //   {
       //     new(): T;
       //   }

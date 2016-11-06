@@ -168,10 +168,16 @@ app.appModule.component('cagClock', {
   controller: ['$timeout', Controller]
 });
 ```
-Värt att notera ovan är att eftersom vi har bootstrappat med strictDi
-måste vi använda _inline array annotation_ i controller-tilldelningen, 
-för att explicit ange DI-parameternamn. 
-Detta för DI skall funka efter minifiering/uglifiering.
+Värt att notera ovan: 
+
+- eftersom vi har bootstrappat med strictDi
+  måste vi använda _inline array annotation_ i controller-tilldelningen, 
+  för att explicit ange DI-parameternamn. 
+  Detta för DI skall funka efter minifiering/uglifiering.
+- Controller-klassen agerar factory-metod (kommer ni ihåg konstruktorfunktioner i TS?).
+  Instanser av klassen kommer vara åtkomliga som `$ctrl`i HTML. 
+  Fälten i klassen blir således properties åtkomliga i HTML, som .t.ex
+  `$ctrl.time`.
 
 Och så måste vi importera den i `app.module.ts` så att den inkluderas
 i applikationsbundeln och exekveras. Tänk på att den måste läggas sist
