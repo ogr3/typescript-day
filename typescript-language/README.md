@@ -1,5 +1,7 @@
-Bygg och kör
-------------
+Bygg och kör kontinuerlig test
+------------------------------
 
-    $ npm install
-    $ npm run test:auto
+```bash
+$ npm install
+$ npm run test:auto
+```
