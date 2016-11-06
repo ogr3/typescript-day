@@ -12,6 +12,8 @@ Men webpack ser ut vara vinnaren i utvecklingsaktivitet, funktioner, plugins och
 
 Vi skall sätta upp ett webpack-projekt för att få ett grepp om vad som erbjuds.
 
+(Om du vill klippa och klistra finns fungerande kod under [./complete](./complete))
+
 Sätta upp ett enkelt webpack-projekt för typescript-applikationer
 -----------------------------------------------------------------
 ### Skapa projekt och installera paket

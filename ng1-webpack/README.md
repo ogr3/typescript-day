@@ -8,6 +8,8 @@ starters för typescript och webpack (se t.ex
 [Webpack: An introduction](https://angular.io/docs/ts/latest/guide/webpack.html) eller
 [angular2-webpack-starter](https://github.com/AngularClass/angular2-webpack-starter)).
 
+(Om du vill klippa och klistra finns fungerande kod under [./complete](./complete))
+
 Vad behöver vi tänka på?
 ------------------------
 
