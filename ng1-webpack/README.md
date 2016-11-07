@@ -181,15 +181,11 @@ Värt att notera ovan:
   Fälten i klassen blir således properties åtkomliga i HTML, som .t.ex
   `$ctrl.time`.
 
-Och så måste vi importera den i `app.module.ts` så att den inkluderas
-i applikationsbundeln och exekveras. Här behöver man ta till ett litet 
-knep för att angular-modulen skall ha skapats när `clock.component.ts` inkluderas.
-Eftersom det som sker när en fil importeras är att den exekveras (på samma sätt som 
-när man inkluderar den via en <script>-tag) får man ett beroende mellan filerna.
-I `clock.component.ts` importerar vi ju den `const` som definieras i `app.module.ts`
-definierar och den måste ha tilldelats innan den används.
-För att få till det måste importen av `clock.component.ts` läggas sist
-i `app.module.ts`-filen så att `export const appModule = ...` definierats.
+Och så måste vi importera den i `app.module.ts` så att den inkluderas i applikationsbundeln och evalueras. 
+Här behöver man ta till ett litet knep för att angular-modulen skall ha skapats när `clock.component.ts` inkluderas.
+Eftersom det som sker när en fil importeras är att den exekveras (på samma sätt som när man inkluderar den via en `<script>`-tag) får man ett beroende mellan filerna. 
+I `clock.component.ts` importerar vi ju den `const` som definieras i `app.module.ts` definierar och den måste ha tilldelats innan den används.
+För att få till det måste importen av `clock.component.ts` läggas sist i `app.module.ts`-filen så att `export const appModule = ...` definierats.
 
 ```typescript
 :
