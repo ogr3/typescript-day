@@ -20,7 +20,6 @@ men vi ska inte ta till såna knep.)
 - Bootstrappa från kod för att ha kontroll på när bootstrapping körs.
 - Implementera tjänster/controllers/moduler, etc., med typescript-klasser. 
 - Bra (men inte obligatorisk) grej: använd Angular 1.5 [component](https://docs.angularjs.org/guide/component) för komponenter, st.f direktiv.
-- Bra grej 2: använd Angular 1.5's komponent-router 
 
 Sätta upp projekt
 -----------------
@@ -42,7 +41,7 @@ Angular 1.5
 -----------
 OK, då ska vi lägga till Angular 1.5 samt se till att den bootstrappas.
 
-Installera angular smat dess @types:
+Installera angular samt dess @types:
 
 ```bash
 $ npm i -S angular
@@ -183,8 +182,14 @@ Värt att notera ovan:
   `$ctrl.time`.
 
 Och så måste vi importera den i `app.module.ts` så att den inkluderas
-i applikationsbundeln och exekveras. Tänk på att den måste läggas sist
-i filen så att `export const appModule = ...` definierats innan import.
+i applikationsbundeln och exekveras. Här behöver man ta till ett litet 
+knep för att angular-modulen skall ha skapats när `clock.component.ts` inkluderas.
+Eftersom det som sker när en fil importeras är att den exekveras (på samma sätt som 
+när man inkluderar den via en <script>-tag) får man ett beroende mellan filerna.
+I `clock.component.ts` importerar vi ju den `const` som definieras i `app.module.ts`
+definierar och den måste ha tilldelats innan den används.
+För att få till det måste importen av `clock.component.ts` läggas sist
+i `app.module.ts`-filen så att `export const appModule = ...` definierats.
 
 ```typescript
 :
