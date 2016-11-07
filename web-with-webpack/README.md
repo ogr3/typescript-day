@@ -1,4 +1,4 @@
-Använda webpack som mudulladare och utvecklingsmiljö
+Använda webpack som modulladare och utvecklingsmiljö
 ====================================================
 [Webpack](https://github.com/webpack/webpack) är en modulpaketerare (byggfasen) och modulladdare (i runtime).
 
@@ -45,7 +45,7 @@ Vi skapar konfigurationsfiler under `config/` för webpack
 - En för att bygga distro
 
 #### Gemensam: config/webpack.common.js
-Minimal, man behöver typiskt loders för CSS, LESS, SASS, m.m, det finns an uppsjö.
+Minimal, man behöver typiskt loaders för CSS, LESS, SASS, m.m, det finns en uppsjö.
 
 ```javascript
 const HtmlWebpackPlugin = require('html-webpack-plugin');

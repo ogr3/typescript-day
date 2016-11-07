@@ -40,3 +40,6 @@ jspm_packages
 *.js
 *.d.ts
 *.js.map
+
+#IDEA
+.idea

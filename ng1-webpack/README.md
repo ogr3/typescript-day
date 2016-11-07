@@ -19,7 +19,7 @@ bra när man har en massa existerande kod:
 men vi ska inte ta till såna knep.)
 - Bootstrappa från kod för att ha kontroll på när bootstrapping körs.
 - Implementera tjänster/controllers/moduler, etc., med typescript-klasser. 
-- Bra (men inte obligatorisk) grej: använd Angular 1.5 [component](https://docs.angularjs.org/guide/component) för komponenter, st.f direktiv.
+- Bra (men inte obligatorisk) grej: använd Angular 1.5 [component](https://docs.angularjs.org/guide/component) för komponenter, ist.f direktiv.
 - Bra grej 2: använd Angular 1.5's komponent-router 
 
 Sätta upp projekt
@@ -172,7 +172,7 @@ app.appModule.component('cagClock', {
 ```
 Värt att notera ovan: 
 
-- eftersom vi har bootstrappat med strictDi
+- eftersom vi har bootstrappat med `strictDi`
   måste vi använda _inline array annotation_ i controller-tilldelningen, 
   för att explicit ange DI-parameternamn. 
   Detta för DI skall funka efter minifiering/uglifiering.
