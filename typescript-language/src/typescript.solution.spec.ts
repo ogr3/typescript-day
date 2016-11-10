@@ -151,6 +151,9 @@ rader`;
       const aTuple: [number, string] = [1, 'två'];
 
       // aTuple[0] = 'aString'; // prova att inkludera detta i koden; kompileringsfel: ett number kan inte tilldelas en string
+
+      // Däremot är det här lite skumt; det skiner igenom att det är syntaktiskt socker på en javascript-array
+      aTuple[99] = 12;
     });
 
     it("TS har enum", () => {
