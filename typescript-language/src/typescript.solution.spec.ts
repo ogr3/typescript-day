@@ -218,6 +218,9 @@ rader`;
       const a: string = <string>myString;
       const b: string = myString as string;
       // const c = (<number>myString); // prova att inkludera detta i koden; kompileringsfel: string kan ej konverteras till number
+      const d:any = 42;
+      const e:string = <string>d; // Ingen riktig kontroll; e blir ett number!!!
+      expect(typeof e).to.equal('number'); // duh!
     });
   });
 
@@ -588,6 +591,19 @@ rader`;
 
       animal = rhino; // OK
       // animal = employee; // prova att inkludera detta i koden; kompileringsfel: 'Animal' och 'Employee' är inte kompatibla, separata dekl. av 'name'
+
+      class Pastry {
+        constructor(public name:string){}
+      }
+
+      class Building {
+        constructor(public name:string){}
+      }
+
+      const kaka:Pastry = new Pastry('Kaka');
+      let hydda:Building = new Building('Hydda');
+      hydda = kaka; // Skumt
+
     });
 
     it("Konstruktorer kan vara protected", () => {
