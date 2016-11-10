@@ -606,7 +606,11 @@ rader`;
 
     });
 
-    it("Konstruktorer kan vara protected", () => {
+    it("Konstruktorer kan vara protected och private", () => {
+      class Z {
+        private constructor(a:number){}
+      }
+
       class A {
         protected constructor(protected x: number) {
         }
