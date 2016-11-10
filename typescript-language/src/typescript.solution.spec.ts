@@ -132,6 +132,7 @@ rader`;
     it("TS har typad array", () => {
       const anArray: number[] = [1, 2, 3, 4];
       const anotherArray: Array<number> = [4, 3, 2, 1];
+      // const thirdArray:number[] = ['kaka','baka']; // prova att inkludera detta i koden; kompileringsfel: number kan ej tilldelas en string
     });
 
     it("Javascripts standardiserade inbyggda objekt", () => {
