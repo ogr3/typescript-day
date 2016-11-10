@@ -62,8 +62,20 @@ describe("Typescript", () => {
           expect(x).to.equal(33);
         }
 
+        var funcs = [];
+
+        // skapa funktioner som man tror skall returnera räknarvärdet
+        for (let i = 0; i < 3; i++) {
+          funcs.push(function () {
+            return i;
+          });
+        }
+
         // Nu funkar det som man förväntar sig
         expect(x).to.equal(22);
+        expect(funcs[0]()).to.equal(0); // Inte vad man förväntar sig
+        expect(funcs[1]()).to.equal(1); // Inte vad man förväntar sig
+        expect(funcs[2]()).to.equal(2); // Inte vad man förväntar sig
       }
 
       letIsGood();
