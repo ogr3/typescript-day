@@ -713,6 +713,18 @@ rader`;
       expect(l()).to.equal('ostkaka');
     });
 
+    it("Lambda-uttryck/pilfunktioner", () => {
+      // Man kan definiera en funktion som ett lambda-uttryck...
+      const double = x => 2*x;
+
+      // ...som såklart betraktas som ett objekt, dvs kan skickas som parameter och returvärde
+      function stringify(f:(number) => number):(number)=>string {
+        return x => `Resultat: ${f(x)}`;
+      }
+
+      expect(stringify(a => 42 + a)(12)).to.equal('Resultat: 54');
+    });
+
     it("Deklarera signatur", ()=>{
       function length(s:string):number {
         return s.length;
