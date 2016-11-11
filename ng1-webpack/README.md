@@ -171,7 +171,7 @@ app.appModule.component('cagClock', {
 ```
 Värt att notera ovan: 
 
-- eftersom vi har bootstrappat med strictDi
+- eftersom vi har bootstrappat med `strictDi`
   måste vi använda _inline array annotation_ i controller-tilldelningen, 
   för att explicit ange DI-parameternamn. 
   Detta för DI skall funka efter minifiering/uglifiering.
