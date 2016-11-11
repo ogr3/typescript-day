@@ -3,7 +3,8 @@ module.exports = {
     entry: {
         // Här anger vi att huvudmodulen som skall inkluderas är src/Main.ts.
         // Denna skall sedan importera (direkt eller indirekt) resten av applikationen
-        "main": "./src/Main.ts"
+        "main": "./src/Main.ts",
+        "vendor": "./src/vendor.ts"
     },
     resolve: {
         // Webpack skall följande filändelser för att lösa upp moduler
@@ -21,7 +22,7 @@ module.exports = {
                 // Ange loader för html-filer
                 test: /\.html$/,
                 loader: 'html'
-            },
+      }
         ]
     },
     plugins: [
