@@ -36,6 +36,29 @@ $ npm i -D awesome-typescript-loader      # Webpack-laddare för typescript-file
 $ npm i -D html-loader                    # Webpack-laddare för html-filer
 $ npm i -D html-webpack-plugin            # Webpack-tillägg för att skapa html-fil som laddar webpack-bundle
 ```
+### Typescrip-konfiguration
+Vi behöver en Typescript-konfiguration, `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "declaration": false,
+    "pretty": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
 
 ### Webpackkonfiguration
 Vi skapar konfigurationsfiler under `config/` för webpack
@@ -97,7 +120,9 @@ module.exports = webpackMerge(commonConfig, {
   // Devserver kommer att generera allt i minnet ist.f till disk
   output: {
     // Ange URL relativt vilken script m.m servas från
-    publicPath: 'http://localhost:8080/'
+    publicPath: 'http://localhost:8080/',
+    filename: '[name].js',
+    chunkFilename: '[id].chunk.js'
   },
 
   // Lite konf för webpack devserver

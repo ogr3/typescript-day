@@ -64,7 +64,7 @@ entry: {
 
 Och så lägger vi till filerna.
 
-#### src/app.ts
+#### src/Main.ts
 
 ```typescript
 import * as ng1 from "angular";
