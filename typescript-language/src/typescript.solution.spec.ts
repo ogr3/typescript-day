@@ -62,8 +62,20 @@ describe("Typescript", () => {
           expect(x).to.equal(33);
         }
 
+        var funcs = [];
+
+        // skapa funktioner som man tror skall returnera räknarvärdet
+        for (let i = 0; i < 3; i++) {
+          funcs.push(function () {
+            return i;
+          });
+        }
+
         // Nu funkar det som man förväntar sig
         expect(x).to.equal(22);
+        expect(funcs[0]()).to.equal(0); // Inte vad man förväntar sig
+        expect(funcs[1]()).to.equal(1); // Inte vad man förväntar sig
+        expect(funcs[2]()).to.equal(2); // Inte vad man förväntar sig
       }
 
       letIsGood();
@@ -120,6 +132,7 @@ rader`;
     it("TS har typad array", () => {
       const anArray: number[] = [1, 2, 3, 4];
       const anotherArray: Array<number> = [4, 3, 2, 1];
+      // const thirdArray:number[] = ['kaka','baka']; // prova att inkludera detta i koden; kompileringsfel: number kan ej tilldelas en string
     });
 
     it("Javascripts standardiserade inbyggda objekt", () => {
@@ -138,6 +151,9 @@ rader`;
       const aTuple: [number, string] = [1, 'två'];
 
       // aTuple[0] = 'aString'; // prova att inkludera detta i koden; kompileringsfel: ett number kan inte tilldelas en string
+
+      // Däremot är det här lite skumt; det skiner igenom att det är syntaktiskt socker på en javascript-array
+      aTuple[99] = 12;
     });
 
     it("TS har enum", () => {
@@ -202,6 +218,9 @@ rader`;
       const a: string = <string>myString;
       const b: string = myString as string;
       // const c = (<number>myString); // prova att inkludera detta i koden; kompileringsfel: string kan ej konverteras till number
+      const d:any = 42;
+      const e:string = <string>d; // Ingen riktig kontroll; e blir ett number!!!
+      expect(typeof e).to.equal('number'); // duh!
     });
   });
 
@@ -572,9 +591,26 @@ rader`;
 
       animal = rhino; // OK
       // animal = employee; // prova att inkludera detta i koden; kompileringsfel: 'Animal' och 'Employee' är inte kompatibla, separata dekl. av 'name'
+
+      class Pastry {
+        constructor(public name:string){}
+      }
+
+      class Building {
+        constructor(public name:string){}
+      }
+
+      const kaka:Pastry = new Pastry('Kaka');
+      let hydda:Building = new Building('Hydda');
+      hydda = kaka; // Skumt
+
     });
 
-    it("Konstruktorer kan vara protected", () => {
+    it("Konstruktorer kan vara protected och private", () => {
+      class Z {
+        private constructor(a:number){}
+      }
+
       class A {
         protected constructor(protected x: number) {
         }
@@ -711,6 +747,18 @@ rader`;
       //expect(l()).to.equal('ostkaka'); // prova att inkludera detta i koden; kompileringsfel: 'l' används innan den definierats
       const l = function() {return 'ostkaka'};
       expect(l()).to.equal('ostkaka');
+    });
+
+    it("Lambda-uttryck/pilfunktioner", () => {
+      // Man kan definiera en funktion som ett lambda-uttryck...
+      const double = x => 2*x;
+
+      // ...som såklart betraktas som ett objekt, dvs kan skickas som parameter och returvärde
+      function stringify(f:(number) => number):(number)=>string {
+        return x => `Resultat: ${f(x)}`;
+      }
+
+      expect(stringify(a => 42 + a)(12)).to.equal('Resultat: 54');
     });
 
     it("Deklarera signatur", ()=>{
